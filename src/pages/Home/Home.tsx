@@ -1,3 +1,4 @@
+import SearchBar from '../../components/SearchBar/SearchBar'
 import React, { Component } from 'react'
 import styles from './Home.module.scss'
 
@@ -6,7 +7,7 @@ class Home extends Component {
     return (
       <main className="main">
         <div className="container">
-          <h1>Home</h1>
+          <SearchBar />
         </div>
       </main>
     )
