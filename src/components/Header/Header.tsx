@@ -10,10 +10,14 @@ class Header extends Component {
           <nav className={styles.header__nav}>
             <ul>
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : undefined)} end>
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/about-us">About Us</NavLink>
+                <NavLink to="/about-us" className={({ isActive }) => (isActive ? 'active' : undefined)} end>
+                  About Us
+                </NavLink>
               </li>
             </ul>
           </nav>
