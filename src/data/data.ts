@@ -1,6 +1,6 @@
-import { ICards } from '../interface/interface'
+import { CardsState } from '../interface/interface'
 
-export const data: ICards = [
+export const data: CardsState = [
   {
     id: 1,
     name: 'Rick Sanchez',

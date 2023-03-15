@@ -1,4 +1,4 @@
-export interface ICard {
+export interface CardState {
   id: number
   name: string
   status: string
@@ -9,4 +9,4 @@ export interface ICard {
   likes: number
 }
 
-export type ICards = ICard[]
+export type CardsState = CardState[]
