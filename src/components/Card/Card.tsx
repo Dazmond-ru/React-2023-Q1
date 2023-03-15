@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import { FiHeart, FiEye, FiClock } from 'react-icons/fi'
-import { ICard } from '../../interface/interface'
+import { CardState } from '../../interface/interface'
 
 import styles from './Card.module.scss'
 
-class Card extends Component<ICard> {
-  constructor(props: ICard) {
+class Card extends Component<CardState> {
+  constructor(props: CardState) {
     super(props)
   }
   render() {
