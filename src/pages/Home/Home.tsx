@@ -1,6 +1,6 @@
 import SearchBar from '../../components/SearchBar/SearchBar'
 import React, { Component } from 'react'
-import styles from './Home.module.scss'
+import Cards from '../../components/Cards/Cards'
 
 class Home extends Component {
   render() {
@@ -8,6 +8,7 @@ class Home extends Component {
       <main className="main">
         <div className="container">
           <SearchBar />
+          <Cards />
         </div>
       </main>
     )
