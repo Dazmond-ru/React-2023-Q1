@@ -1,4 +1,4 @@
-import { CardsState } from '../interface/interface'
+import { CardsState } from '../interfaces/interfaces'
 
 export const data: CardsState = [
   {

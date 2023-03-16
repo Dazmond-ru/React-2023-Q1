@@ -7,8 +7,10 @@ class Home extends Component {
     return (
       <main className="main">
         <div className="container">
-          <SearchBar />
-          <Cards />
+          <div data-testid="home">
+            <SearchBar />
+            <Cards />
+          </div>
         </div>
       </main>
     )

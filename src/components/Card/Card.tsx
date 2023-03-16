@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import { FiHeart, FiEye, FiClock } from 'react-icons/fi'
-import { CardState } from '../../interface/interface'
+import { CardState } from '../../interfaces/interfaces'
 
 import styles from './Card.module.scss'
 
@@ -12,11 +12,11 @@ class Card extends Component<CardState> {
   }
   render() {
     return (
-      <div className={styles.card}>
-        <div className={styles.card__image}>
+      <div className={styles.card} data-testid="card">
+        <div className={styles.card__image} data-testid="card-image">
           <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={this.props.image} />
         </div>
-        <div className={styles.card__body}>
+        <div className={styles.card__body} data-testid="card-body">
           <Link to="#" className={styles.card__name}>
             {this.props.name}
           </Link>
@@ -25,7 +25,7 @@ class Card extends Component<CardState> {
           </p>
           <p className={styles.card__episodes}>episodes: {this.props.episodes}</p>
         </div>
-        <div className={styles.card__stats}>
+        <div className={styles.card__stats} data-testid="card-stats">
           <span>
             <FiClock /> {this.props.created}
           </span>
