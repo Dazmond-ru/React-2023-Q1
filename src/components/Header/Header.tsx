@@ -1,12 +1,29 @@
+import { HeaderProps } from 'interfaces/interfaces'
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import styles from './Header.module.scss'
 
-class Header extends Component {
+function withLocation<T>(Component: React.ComponentType<T>) {
+  function ComponentWithLocation(props: T) {
+    const location = useLocation()
+    return <Component location={location} {...props} />
+  }
+  return ComponentWithLocation
+}
+
+class Header extends Component<HeaderProps> {
+  getPageTitle() {
+    const { location } = this.props
+    if (location.pathname === '/') return 'Home'
+    else if (location.pathname === '/about-us' || location.pathname === '/about-us/') return 'About Us'
+    return 'Not Found'
+  }
+
   render() {
     return (
       <header className={styles.header}>
-        <div className="container">
+        <div className={['container', styles.header__container].join(' ')}>
+          <h3 className={styles.header__title}>{this.getPageTitle()}</h3>
           <nav className={styles.header__nav}>
             <ul>
               <li>
@@ -15,7 +32,7 @@ class Header extends Component {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about-us/" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+                <NavLink to="/about-us" className={({ isActive }) => (isActive ? 'active' : undefined)}>
                   About Us
                 </NavLink>
               </li>
@@ -27,4 +44,4 @@ class Header extends Component {
   }
 }
 
-export default Header
+export default withLocation(Header)

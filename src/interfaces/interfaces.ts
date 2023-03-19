@@ -10,3 +10,7 @@ export interface CardState {
 }
 
 export type CardsState = CardState[]
+
+export type HeaderProps = {
+  location: Location
+}
