@@ -6,10 +6,24 @@
   align-items: center;
   background-color: black;
 
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    width: 110px;
+    padding: 10px;
+    border-radius: 12px;
+    background: white;
+    text-align: center;
+  }
+
   &__nav {
     & ul {
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       gap: 1.5rem;
     }
 

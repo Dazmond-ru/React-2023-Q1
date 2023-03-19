@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import styles from './AboutUs.module.scss'
 
 class AboutUs extends Component {
   render() {

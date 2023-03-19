@@ -6,7 +6,7 @@ class Layout extends Component {
   render() {
     return (
       <>
-        <Header />
+        <Header location={location} />
         <Outlet />
       </>
     )
