@@ -4,7 +4,7 @@ import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound/NotFound'
 import React from 'react'
 import { Component } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 
 class App extends Component {
   render() {
@@ -14,7 +14,8 @@ class App extends Component {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about-us" element={<AboutUs />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="404" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/404" replace />} />
           </Route>
         </Routes>
       </>
