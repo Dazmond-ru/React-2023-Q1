@@ -14,9 +14,9 @@ function withLocation<T>(Component: React.ComponentType<T>) {
 class Header extends Component<HeaderProps> {
   getPageTitle() {
     const { location } = this.props
-    if (location.pathname === '/') return 'Home'
-    else if (location.pathname === '/about-us' || location.pathname === '/about-us/') return 'About Us'
-    return 'Not Found'
+    if (location.pathname === '/') return 'Homе'
+    else if (location.pathname === '/about-us' || location.pathname === '/about-us/') return 'Abоut Us'
+    return 'Nоt Found'
   }
 
   render() {
