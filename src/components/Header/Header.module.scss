@@ -1,0 +1,44 @@
+.header {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    width: 110px;
+    padding: 10px;
+    border-radius: 12px;
+    background: white;
+    text-align: center;
+  }
+
+  &__nav {
+    & ul {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.5rem;
+    }
+
+    & li {
+      font-size: 1.25rem;
+    }
+
+    & a {
+      color: white;
+
+      &:hover,
+      :active,
+      .active {
+        border-bottom: 2px solid white;
+      }
+    }
+  }
+}
