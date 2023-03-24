@@ -11,17 +11,17 @@ describe('Header Component', () => {
     const header = screen.getByRole('banner')
     expect(header).toBeInTheDocument()
 
-    const homeElement = screen.getByText('Home')
+    const homeElement = screen.getByRole('link', { name: 'Home' })
     expect(homeElement).toBeInTheDocument()
 
-    const aboutElement = screen.getByText('About Us')
+    const aboutElement = screen.getByRole('link', { name: 'About Us' })
     expect(aboutElement).toBeInTheDocument()
   })
   test('changes link class when clicked', async () => {
     render(<Header location={location} />, { wrapper: MemoryRouter })
 
-    const homeLink = screen.getByText('Home')
-    const aboutLink = screen.getByText('About Us')
+    const homeLink = screen.getByRole('link', { name: 'Home' })
+    const aboutLink = screen.getByRole('link', { name: 'About Us' })
 
     expect(homeLink).toHaveClass('active')
     expect(aboutLink).not.toHaveClass('active')
