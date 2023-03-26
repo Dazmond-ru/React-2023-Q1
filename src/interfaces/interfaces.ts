@@ -3,10 +3,10 @@ export interface CardState {
   name: string
   status: string
   image: string
-  episodes: number
+  species: string
   created: string
-  views: number
-  likes: number
+  views?: number
+  likes?: number
 }
 
 export type CardsState = CardState[]

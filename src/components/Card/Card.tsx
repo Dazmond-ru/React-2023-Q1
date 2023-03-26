@@ -23,7 +23,7 @@ class Card extends Component<CardState> {
           <p className={styles.card__status}>
             status: <span>{this.props.status}</span>
           </p>
-          <p className={styles.card__episodes}>episodes: {this.props.episodes}</p>
+          <p className={styles.card__episodes}>species: {this.props.species}</p>
         </div>
         <div className={styles.card__stats} data-testid="card-stats">
           <span>
