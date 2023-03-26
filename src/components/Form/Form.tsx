@@ -169,7 +169,7 @@ class Form extends Component<FormProps, FormState> {
     return (
       <div className={styles['card-builder']}>
         <div className={styles['card-builder__wrapper']}>
-          <form className={styles['card-builder__form']} onSubmit={this.handleFormSubmit}>
+          <form className={styles['card-builder__form']} onSubmit={this.handleFormSubmit} data-testid="form">
             <div className={styles['card-builder__name']}>
               <label className={styles['card-builder__label']} htmlFor="nameInput">
                 Name
@@ -183,6 +183,7 @@ class Form extends Component<FormProps, FormState> {
                 onChange={this.handleChange}
                 onFocus={this.handleFocus}
                 ref={this.nameInput}
+                data-testid="nameInput"
               />
               <label className={styles['card-builder__errors']}>{this.state.errors.nameInput}</label>
             </div>
@@ -288,6 +289,7 @@ class Form extends Component<FormProps, FormState> {
                   onChange={this.handleChange}
                   onFocus={this.handleFocus}
                   ref={this.confirmInput}
+                  data-testid="confirmInput"
                 />
                 I confirm that the information is correct
               </label>
@@ -299,6 +301,7 @@ class Form extends Component<FormProps, FormState> {
               className={styles['card-builder__form-button']}
               type="submit"
               disabled={this.state.isButtonDisabled}
+              data-testid="submit"
             >
               Submit
             </button>

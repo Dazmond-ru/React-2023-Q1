@@ -9,7 +9,7 @@ describe('Card Component', () => {
     name: 'Rick Sanchez',
     status: 'Alive',
     image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-    episodes: 51,
+    species: 'Human',
     created: '04/11/2017',
     views: 7131,
     likes: 348,
@@ -21,7 +21,7 @@ describe('Card Component', () => {
     expect(screen.getByRole('img')).toHaveAttribute('src', props.image)
     expect(screen.getByRole('link')).toHaveTextContent(props.name)
     expect(screen.getByText(/status/i)).toHaveTextContent(props.status)
-    expect(screen.getByText(/episodes/i)).toHaveTextContent(props.episodes.toString())
+    expect(screen.getByText(/species/i)).toHaveTextContent(props.species.toString())
   })
 
   test('renders card', () => {

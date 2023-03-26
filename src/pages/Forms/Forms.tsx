@@ -25,7 +25,7 @@ class Forms extends Component<Record<string, unknown>, FormsState> {
 
   render() {
     return (
-      <div>
+      <div data-testid="forms">
         <Form addCard={this.addCard} />
         <Cards cardData={this.state.cards} />
       </div>
