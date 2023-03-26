@@ -1,4 +1,4 @@
-import { CardsState } from '../interfaces/interfaces'
+import { CardState } from '../interfaces/interfaces'
 
 export const species: string[] = [
   'Value',
@@ -14,7 +14,7 @@ export const species: string[] = [
   'Disease',
 ]
 
-export const data: CardsState = [
+export const data: CardState[] = [
   {
     id: 1,
     name: 'Rick Sanchez',

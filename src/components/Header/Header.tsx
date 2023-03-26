@@ -18,7 +18,7 @@ class Header extends Component<HeaderProps> {
     const { location } = this.props
     if (location.pathname === '/') return 'Home'
     else if (location.pathname === '/about-us' || location.pathname === '/about-us/') return 'About Us'
-    else if (location.pathname === '/form' || location.pathname === '/form/') return 'Form'
+    else if (location.pathname === '/forms' || location.pathname === '/forms/') return 'Forms'
     return 'Not Found'
   }
 
@@ -40,8 +40,8 @@ class Header extends Component<HeaderProps> {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/form" className={isClassActive}>
-                  Form
+                <NavLink to="/forms" className={isClassActive}>
+                  Forms
                 </NavLink>
               </li>
             </ul>
