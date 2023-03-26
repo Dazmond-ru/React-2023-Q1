@@ -1,5 +1,19 @@
 import { CardsState } from '../interfaces/interfaces'
 
+export const species: string[] = [
+  'Value',
+  'Human',
+  'Alien',
+  'Humanoid',
+  'unknown',
+  'Poopybutthole',
+  'Mythological Creature',
+  'Animal',
+  'Robot',
+  'Cronenberg',
+  'Disease',
+]
+
 export const data: CardsState = [
   {
     id: 1,
