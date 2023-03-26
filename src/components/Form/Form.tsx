@@ -169,7 +169,6 @@ class Form extends Component<FormProps, FormState> {
     return (
       <div className={styles['card-builder']}>
         <div className={styles['card-builder__wrapper']}>
-          <h3 className={styles['card-builder__title']}>Create Card</h3>
           <form className={styles['card-builder__form']} onSubmit={this.handleFormSubmit}>
             <div className={styles['card-builder__name']}>
               <label className={styles['card-builder__label']} htmlFor="nameInput">
