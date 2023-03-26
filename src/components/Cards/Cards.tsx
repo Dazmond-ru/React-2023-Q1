@@ -1,16 +1,19 @@
-import { data } from '../../data/data'
 import React, { Component } from 'react'
 
 import Card from '../Card/Card'
 
 import styles from './Cards.module.scss'
-import { CardState } from 'interfaces/interfaces'
+import { CardsType } from '../../interfaces/interfaces'
 
-class Cards extends Component {
+class Cards extends Component<CardsType> {
+  constructor(props: CardsType) {
+    super(props)
+  }
+
   render() {
     return (
       <div className={styles.cards} data-testid="cards">
-        {data.map((item: CardState) => (
+        {this.props.cardData?.map((item) => (
           <Card key={item.id} {...item} />
         ))}
       </div>

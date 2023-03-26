@@ -7,9 +7,12 @@ import React from 'react'
 test('App renders different pages based on routes', () => {
   render(<App />, { wrapper: MemoryRouter })
 
-  expect(screen.getByText('Home')).toBeInTheDocument()
+  const homeLink = screen.getByRole('link', { name: 'Home' })
+  const aboutLink = screen.getByRole('link', { name: 'About Us' })
 
-  userEvent.click(screen.getByText('About Us'))
+  expect(homeLink).toBeInTheDocument()
 
-  expect(screen.getByText('About Us')).toBeInTheDocument()
+  userEvent.click(aboutLink)
+
+  expect(aboutLink).toBeInTheDocument()
 })

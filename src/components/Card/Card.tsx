@@ -14,7 +14,7 @@ class Card extends Component<CardState> {
     return (
       <div className={styles.card} data-testid="card">
         <div className={styles.card__image} data-testid="card-image">
-          <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={this.props.image} />
+          <img src={this.props.image} />
         </div>
         <div className={styles.card__body} data-testid="card-body">
           <Link to="#" className={styles.card__name}>
@@ -23,7 +23,7 @@ class Card extends Component<CardState> {
           <p className={styles.card__status}>
             status: <span>{this.props.status}</span>
           </p>
-          <p className={styles.card__episodes}>episodes: {this.props.episodes}</p>
+          <p className={styles.card__episodes}>species: {this.props.species}</p>
         </div>
         <div className={styles.card__stats} data-testid="card-stats">
           <span>

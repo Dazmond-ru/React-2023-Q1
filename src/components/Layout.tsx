@@ -7,7 +7,11 @@ class Layout extends Component {
     return (
       <>
         <Header location={location} />
-        <Outlet />
+        <main className="main">
+          <div className="container">
+            <Outlet />
+          </div>
+        </main>
       </>
     )
   }

@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound/NotFound'
 import React from 'react'
 import { Component } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
+import Forms from './pages/Forms/Forms'
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="forms" element={<Forms />} />
             <Route path="404" element={<NotFound />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
           </Route>

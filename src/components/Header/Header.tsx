@@ -11,11 +11,14 @@ function withLocation<T>(Component: React.ComponentType<T>) {
   return ComponentWithLocation
 }
 
+const isClassActive = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : undefined)
+
 class Header extends Component<HeaderProps> {
   getPageTitle() {
     const { location } = this.props
     if (location.pathname === '/') return 'Home'
     else if (location.pathname === '/about-us' || location.pathname === '/about-us/') return 'About Us'
+    else if (location.pathname === '/forms' || location.pathname === '/forms/') return 'Forms'
     return 'Not Found'
   }
 
@@ -27,13 +30,18 @@ class Header extends Component<HeaderProps> {
           <nav className={styles.header__nav}>
             <ul>
               <li>
-                <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+                <NavLink to="/" className={isClassActive}>
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about-us" className={({ isActive }) => (isActive ? 'active' : undefined)}>
+                <NavLink to="/about-us" className={isClassActive}>
                   About Us
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/forms" className={isClassActive}>
+                  Forms
                 </NavLink>
               </li>
             </ul>
