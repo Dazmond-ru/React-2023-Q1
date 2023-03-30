@@ -1,24 +1,20 @@
-import React, { Component } from 'react'
-
+import React from 'react'
 import Card from '../Card/Card'
-
 import styles from './Cards.module.scss'
 import { CardsType } from '../../interfaces/interfaces'
 
-class Cards extends Component<CardsType> {
-  constructor(props: CardsType) {
-    super(props)
-  }
+interface CardsProps {
+  cardData?: CardsType['cardData']
+}
 
-  render() {
-    return (
-      <div className={styles.cards} data-testid="cards">
-        {this.props.cardData?.map((item) => (
-          <Card key={item.id} {...item} />
-        ))}
-      </div>
-    )
-  }
+const Cards = ({ cardData }: CardsProps) => {
+  return (
+    <div className={styles.cards} data-testid="cards">
+      {cardData?.map((item) => (
+        <Card key={item.id} card={item} />
+      ))}
+    </div>
+  )
 }
 
 export default Cards

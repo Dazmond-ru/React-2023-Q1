@@ -11,10 +11,6 @@ export interface CardState {
 
 export type CardsType = { cardData?: CardState[] }
 
-export type HeaderProps = {
-  location: Location
-}
-
 export interface FormsState {
   cards: CardState[]
 }

@@ -1,42 +1,43 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './SearchBar.module.scss'
-
 import { FiSearch } from 'react-icons/fi'
 
-class SearchBar extends Component {
-  state = { value: '' }
+const SearchBar = () => {
+  const [value, setValue] = useState('')
 
-  componentDidMount = () => {
-    const value = localStorage.getItem('searchValue')
-    if (value) {
-      this.setState({ value: value })
+  useEffect(() => {
+    const storedValue = localStorage.getItem('searchValue')
+    if (storedValue) {
+      setValue(storedValue)
     }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('searchValue', value)
+  }, [value])
+
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
   }
 
-  componentWillUnmount = () => {
-    localStorage.setItem('searchValue', this.state.value)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
   }
 
-  inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value })
-  }
-
-  render() {
-    return (
-      <div className={styles['search-bar']}>
-        <input
-          type="search"
-          placeholder="Search"
-          className={styles['search-bar__input']}
-          value={this.state.value}
-          onChange={this.inputHandler}
-        />
-        <button type="submit" className={styles['search-bar__button']} onSubmit={(e) => e.preventDefault()}>
-          <FiSearch />
-        </button>
-      </div>
-    )
-  }
+  return (
+    <form className={styles['search-bar']} onSubmit={handleSubmit}>
+      <input
+        type="search"
+        placeholder="Search"
+        className={styles['search-bar__input']}
+        value={value}
+        onChange={inputHandler}
+      />
+      <button type="submit" className={styles['search-bar__button']}>
+        <FiSearch />
+      </button>
+    </form>
+  )
 }
 
 export default SearchBar
