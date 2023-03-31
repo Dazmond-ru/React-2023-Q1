@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import Form from '../../components/Form/Form'
 import userEvent from '@testing-library/user-event'
 
@@ -12,11 +12,12 @@ describe('Form Component', () => {
     expect(element).toBeInTheDocument()
   })
 
-  test('user must enter name, created, status, image', () => {
+  test('user must enter name, created, status, image', async () => {
     render(<Form />)
 
-    fireEvent.click(screen.getByTestId('confirmInput'))
-    fireEvent.click(screen.getByTestId('submit'))
+    await userEvent.click(screen.getByTestId('confirmInput'))
+    await userEvent.click(screen.getByTestId('submit'))
+
     expect(screen.getByText(/Please enter name!/i)).toBeInTheDocument()
     expect(screen.getByText(/Please enter created date!/i)).toBeInTheDocument()
     expect(screen.getByText(/Please choose status!/i)).toBeInTheDocument()
@@ -27,7 +28,7 @@ describe('Form Component', () => {
     render(<Form />)
 
     await userEvent.type(screen.getByTestId('nameInput'), 'name')
-    fireEvent.click(screen.getByTestId('submit'))
+    await userEvent.click(screen.getByTestId('submit'))
     expect(screen.getByText(/Your name should start with a capital letter!/i)).toBeInTheDocument()
   })
 
@@ -35,7 +36,7 @@ describe('Form Component', () => {
     render(<Form />)
 
     await userEvent.type(screen.getByTestId('nameInput'), 'nam')
-    fireEvent.click(screen.getByTestId('submit'))
+    await userEvent.click(screen.getByTestId('submit'))
     expect(screen.getByText(/Your name must be more than 4 letters!/i)).toBeInTheDocument()
   })
 
@@ -43,7 +44,7 @@ describe('Form Component', () => {
     render(<Form />)
 
     await userEvent.type(screen.getByTestId('nameInput'), 'Name')
-    fireEvent.click(screen.getByTestId('submit'))
+    await userEvent.click(screen.getByTestId('submit'))
     expect(screen.getByText(/Confirm if you are agree with!/i)).toBeInTheDocument()
   })
 
