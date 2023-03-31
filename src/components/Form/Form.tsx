@@ -1,318 +1,213 @@
-import { FormProps, FormState } from 'interfaces/interfaces'
-import React, { Component } from 'react'
-
+import { FormProps } from 'interfaces/interfaces'
+import React, { useEffect } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { species } from '../../data/data'
-
 import styles from './Form.module.scss'
 
-class Form extends Component<FormProps, FormState> {
-  nameInput: React.RefObject<HTMLInputElement>
-  createdInput: React.RefObject<HTMLInputElement>
-  speciesInput: React.RefObject<HTMLSelectElement>
-  aliveInput: React.RefObject<HTMLInputElement>
-  deadInput: React.RefObject<HTMLInputElement>
-  unknownInput: React.RefObject<HTMLInputElement>
-  imageInput: React.RefObject<HTMLInputElement>
-  confirmInput: React.RefObject<HTMLInputElement>
+interface FormData {
+  name: string
+  created: string
+  species: string
+  status: string
+  image: FileList
+  confirm: boolean
+}
 
-  constructor(props: FormProps) {
-    super(props)
-    this.nameInput = React.createRef()
-    this.createdInput = React.createRef()
-    this.speciesInput = React.createRef()
-    this.aliveInput = React.createRef()
-    this.deadInput = React.createRef()
-    this.unknownInput = React.createRef()
-    this.imageInput = React.createRef()
-    this.confirmInput = React.createRef()
+const Form = ({ addCard }: FormProps) => {
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isSubmitSuccessful },
+  } = useForm<FormData>({
+    defaultValues: {
+      name: '',
+      created: '',
+      species: '',
+      status: '',
+    },
+    mode: 'onSubmit',
+  })
 
-    this.state = {
-      errors: {
-        nameInput: '',
-        createdInput: '',
-        speciesInput: '',
-        statusInput: '',
-        imageInput: '',
-        confirmInput: '',
-      },
-      isButtonDisabled: true,
-      isCardSaved: false,
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setTimeout(() => {
+        reset()
+      }, 1000)
+    }
+  }, [isSubmitSuccessful, reset])
+
+  const onSubmit: SubmitHandler<FormData> = ({ name, created, species, status, image }, e) => {
+    const newCard = {
+      id: new Date().getTime(),
+      name,
+      created,
+      species,
+      status,
+      image: URL.createObjectURL(image[0]),
+      views: 0,
+      likes: 0,
+    }
+
+    if (addCard) {
+      addCard(newCard)
+      e?.target.reset()
     }
   }
 
-  checkValidation = () => {
-    const setErrors = {
-      nameInput: '',
-      createdInput: '',
-      speciesInput: '',
-      statusInput: '',
-      imageInput: '',
-      confirmInput: '',
-    }
+  return (
+    <div className={styles['card-builder']}>
+      <div className={styles['card-builder__wrapper']}>
+        <form className={styles['card-builder__form']} onSubmit={handleSubmit(onSubmit)} data-testid="form">
+          <div className={styles['card-builder__name']}>
+            <label className={styles['card-builder__label']} htmlFor="nameInput">
+              Name
+            </label>
+            <input
+              className={styles['card-builder__input']}
+              id="nameInput"
+              type="text"
+              placeholder="Enter name"
+              {...register('name', {
+                required: 'Please enter name!',
+                minLength: {
+                  value: 4,
+                  message: 'Your name must be more than 4 letters!',
+                },
+                pattern: {
+                  value: /^[A-Za-z ]+$/,
+                  message: 'Your name should only english letters!',
+                },
+                validate: (value) =>
+                  value[0] === value[0].toUpperCase() ? true : 'Your name should start with a capital letter!',
+              })}
+              data-testid="nameInput"
+            />
+            {errors.name && <label className={styles['card-builder__errors']}>{errors.name.message}</label>}
+          </div>
 
-    let isValid = true
+          <div className={styles['card-builder__created']}>
+            <label className={styles['card-builder__label']} htmlFor="createdInput">
+              Created
+            </label>
+            <input
+              className={styles['card-builder__input']}
+              id="createdInput"
+              type="date"
+              {...register('created', {
+                required: 'Please enter created date!',
+                max: {
+                  value: new Date().toISOString().split('T')[0],
+                  message: 'Please enter a date not in the future',
+                },
+              })}
+            />
+            {errors.created && <label className={styles['card-builder__errors']}>{errors.created.message}</label>}
+          </div>
 
-    const nameRegex = /^[A-Za-z]+$/
+          <div className={styles['card-builder__species']}>
+            <label className={styles['card-builder__label']} htmlFor="speciesInput">
+              Species
+            </label>
+            <select
+              className={styles['card-builder__input']}
+              id="speciesInput"
+              defaultValue=""
+              {...register('species', { required: 'Please select species!' })}
+            >
+              {species.map((specie) => (
+                <option
+                  key={specie}
+                  value={specie !== 'Value' ? specie : ''}
+                  disabled={specie !== 'Value' ? false : true}
+                >
+                  {specie}
+                </option>
+              ))}
+            </select>
+            {errors.species && <label className={styles['card-builder__errors']}>{errors.species.message}</label>}
+          </div>
 
-    if (!this.nameInput.current?.value) {
-      setErrors.nameInput = 'Please enter name!'
-      isValid = false
-    } else if (this.nameInput.current!.value!.length < 4 && this.nameInput.current!.value!.length >= 1) {
-      setErrors.nameInput = 'Your name must be more than 4 letters!'
-      isValid = false
-    } else if (!nameRegex.test(this.nameInput.current!.value!)) {
-      setErrors.nameInput = 'Your name should only english letters!'
-      isValid = false
-    } else if (this.nameInput.current!.value!.charAt(0) !== this.nameInput.current!.value!.charAt(0).toUpperCase()) {
-      setErrors.nameInput = 'Your name should start with a capital letter!'
-      isValid = false
-    }
-
-    if (!this.createdInput.current?.value) {
-      setErrors.createdInput = 'Please enter created date!'
-      isValid = false
-    }
-
-    if (!this.speciesInput.current?.value) {
-      setErrors.speciesInput = 'Please enter specie!'
-      isValid = false
-    }
-
-    if (!this.imageInput.current?.value) {
-      setErrors.imageInput = 'Please add an image!'
-      isValid = false
-    }
-
-    if (!this.aliveInput.current?.checked && !this.deadInput.current?.checked && !this.unknownInput.current?.checked) {
-      setErrors.statusInput = 'Please choose status!'
-      isValid = false
-    }
-
-    if (!this.confirmInput.current?.checked) {
-      setErrors.confirmInput = 'Confirm if you are agree with!'
-      isValid = false
-    }
-
-    this.setState({ errors: setErrors })
-    return isValid
-  }
-
-  handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    if (this.checkValidation()) {
-      const formData = {
-        id: new Date().getTime(),
-        name: this.nameInput.current?.value,
-        created: this.createdInput.current?.value,
-        species: this.speciesInput.current?.value,
-        status: this.aliveInput.current?.checked
-          ? this.aliveInput.current.value
-          : this.deadInput.current?.checked
-          ? this.deadInput.current.value
-          : this.unknownInput.current?.value,
-        image: URL.createObjectURL(this.imageInput.current!.files![0]),
-      }
-
-      if (this.props.addCard) this.props.addCard(formData)
-
-      this.setState({ isButtonDisabled: true })
-      this.setState({ isCardSaved: true })
-
-      event.currentTarget.reset()
-
-      setTimeout(() => this.setState({ isCardSaved: false }), 3000)
-    } else {
-      return
-    }
-  }
-
-  buttonEnabler = () => {
-    const error = this.state.errors
-    return error.nameInput || error.createdInput || error.speciesInput || error.statusInput || error.confirmInput
-      ? true
-      : false
-  }
-
-  componentDidUpdate = () => {
-    if (!this.state.isButtonDisabled) {
-      if (this.buttonEnabler()) {
-        this.setState({ isButtonDisabled: true })
-      }
-    }
-  }
-
-  handleFocus = (event: React.FocusEvent<HTMLInputElement> | React.FocusEvent<HTMLSelectElement>) => {
-    if (event.target.id === 'aliveInput' || event.target.id === 'deadInput' || event.target.id === 'unknownInput') {
-      this.setState({
-        errors: { ...this.state.errors, statusInput: '' },
-      })
-    } else {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          [event.target.id]: '',
-        },
-      })
-    }
-
-    if (this.buttonEnabler()) this.setState({ isButtonDisabled: true })
-  }
-
-  handleChange = () => {
-    this.setState({ isButtonDisabled: false })
-
-    if (this.buttonEnabler()) this.setState({ isButtonDisabled: true })
-  }
-
-  render() {
-    return (
-      <div className={styles['card-builder']}>
-        <div className={styles['card-builder__wrapper']}>
-          <form className={styles['card-builder__form']} onSubmit={this.handleFormSubmit} data-testid="form">
-            <div className={styles['card-builder__name']}>
-              <label className={styles['card-builder__label']} htmlFor="nameInput">
-                Name
-              </label>
+          <div className={styles['card-builder__status']}>
+            <div className={styles['card-builder__status-item']}>
               <input
-                className={styles['card-builder__input']}
-                id="nameInput"
-                type="text"
-                placeholder="Enter name"
-                defaultValue=""
-                onChange={this.handleChange}
-                onFocus={this.handleFocus}
-                ref={this.nameInput}
-                data-testid="nameInput"
+                type="radio"
+                id="aliveInput"
+                value="Alive"
+                {...register('status', {
+                  required: 'Please choose status!',
+                })}
               />
-              <label className={styles['card-builder__errors']}>{this.state.errors.nameInput}</label>
+              <label htmlFor="aliveInput">Alive</label>
             </div>
-
-            <div className={styles['card-builder__created']}>
-              <label className={styles['card-builder__label']} htmlFor="createdInput">
-                Created
-              </label>
+            <div className={styles['card-builder__status-item']}>
               <input
-                className={styles['card-builder__input']}
-                id="createdInput"
-                type="date"
-                onChange={this.handleChange}
-                onFocus={this.handleFocus}
-                ref={this.createdInput}
+                type="radio"
+                id="deadInput"
+                value="Dead"
+                {...register('status', {
+                  required: 'Please choose status!',
+                })}
               />
-              <label className={styles['card-builder__errors']}>{this.state.errors.createdInput}</label>
+              <label htmlFor="deadInput">Dead</label>
             </div>
-
-            <div className={styles['card-builder__species']}>
-              <label className={styles['card-builder__label']} htmlFor="speciesInput">
-                Species
-              </label>
-              <select
-                className={styles['card-builder__input']}
-                id="speciesInput"
-                defaultValue=""
-                onChange={this.handleChange}
-                onFocus={this.handleFocus}
-                ref={this.speciesInput}
-              >
-                {species.map((specie: string) => (
-                  <option
-                    key={specie}
-                    value={specie !== 'Value' ? specie : ''}
-                    disabled={specie !== 'Value' ? false : true}
-                  >
-                    {specie}
-                  </option>
-                ))}
-              </select>
-              <label className={styles['card-builder__errors']}>{this.state.errors.speciesInput}</label>
-            </div>
-
-            <div className={styles['card-builder__status']}>
-              <div className={styles['card-builder__status-item']}>
-                <input
-                  type="radio"
-                  id="aliveInput"
-                  name="status"
-                  value="Alive"
-                  onChange={this.handleChange}
-                  onFocus={this.handleFocus}
-                  ref={this.aliveInput}
-                />
-                <label htmlFor="aliveInput">Alive</label>
-              </div>
-              <div className={styles['card-builder__status-item']}>
-                <input
-                  type="radio"
-                  id="deadInput"
-                  name="status"
-                  value="Dead"
-                  onChange={this.handleChange}
-                  onFocus={this.handleFocus}
-                  ref={this.deadInput}
-                />
-                <label htmlFor="deadInput">Dead</label>
-              </div>
-              <div className={styles['card-builder__status-item']}>
-                <input
-                  type="radio"
-                  id="unknownInput"
-                  name="status"
-                  value="unknown"
-                  onChange={this.handleChange}
-                  onFocus={this.handleFocus}
-                  ref={this.unknownInput}
-                />
-                <label htmlFor="unknownInput">unknown</label>
-              </div>
-              <label className={styles['card-builder__errors']}>{this.state.errors.statusInput}</label>
-            </div>
-
-            <div className={styles['card-builder__image']}>
+            <div className={styles['card-builder__status-item']}>
               <input
-                id="imageInput"
-                type="file"
-                onChange={this.handleChange}
-                onFocus={this.handleFocus}
-                ref={this.imageInput}
+                type="radio"
+                id="unknownInput"
+                value="unknown"
+                {...register('status', {
+                  required: 'Please choose status!',
+                })}
               />
-              <label style={{ marginTop: '4px' }} className={styles['card-builder__errors']}>
-                {this.state.errors.imageInput}
-              </label>
+              <label htmlFor="unknownInput">unknown</label>
             </div>
+            {errors.status && <label className={styles['card-builder__errors']}>{errors.status.message}</label>}
+          </div>
 
-            <div className={styles['card-builder__confirm']}>
-              <label>
-                <input
-                  type="checkbox"
-                  id="confirmInput"
-                  onChange={this.handleChange}
-                  onFocus={this.handleFocus}
-                  ref={this.confirmInput}
-                  data-testid="confirmInput"
-                />
-                I confirm that the information is correct
-              </label>
-              <br />
-              <label className={styles['card-builder__errors']}>{this.state.errors.confirmInput}</label>
-            </div>
+          <div className={styles['card-builder__image']}>
+            <input
+              id="imageInput"
+              type="file"
+              {...register('image', {
+                required: 'Please add an image!',
+              })}
+            />
+            {errors.image && <label className={styles['card-builder__errors']}>{errors.image.message}</label>}
+          </div>
 
+          <div className={styles['card-builder__confirm']}>
+            <input
+              className={styles['card-builder__checkbox']}
+              id="confirmInput"
+              type="checkbox"
+              {...register('confirm', { required: 'Confirm if you are agree with!' })}
+              data-testid="confirmInput"
+            />
+            <label className={styles['card-builder__label']} htmlFor="confirmInput">
+              I confirm that the information is correct
+            </label>
+            {errors.confirm && <label className={styles['card-builder__errors']}>{errors.confirm.message}</label>}
+          </div>
+
+          {!isSubmitSuccessful ? (
             <button
               className={styles['card-builder__form-button']}
-              type="submit"
-              disabled={this.state.isButtonDisabled}
+              value="Submit"
+              disabled={!isDirty}
               data-testid="submit"
             >
               Submit
             </button>
-            {this.state.isButtonDisabled && this.state.isCardSaved && (
-              <label className={styles['card-builder__success']}>Saved</label>
-            )}
-          </form>
-        </div>
+          ) : (
+            <button className={styles['card-builder__success']} type="button" value="Saved">
+              Saved
+            </button>
+          )}
+        </form>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Form

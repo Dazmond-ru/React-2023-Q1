@@ -1,36 +1,27 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import Cards from '../../components/Cards/Cards'
 import Form from '../../components/Form/Form'
-import { CardState, FormsState } from '../../interfaces/interfaces'
+import { CardState } from '../../interfaces/interfaces'
 
-class Forms extends Component<Record<string, unknown>, FormsState> {
-  constructor(props: Record<string, unknown> | Readonly<Record<string, unknown>>) {
-    super(props)
-    this.state = {
-      cards: [],
-    }
-  }
+const Forms = () => {
+  const [cards, setCards] = useState<CardState[]>([])
 
-  addCard = (card: CardState) => {
-    const { cards } = this.state
+  const addCard = (card: CardState) => {
     const newCard = {
       ...card,
       likes: 0,
       views: 0,
     }
-    const updatedCards = [...cards, newCard]
-    this.setState({ cards: updatedCards })
+    setCards([...cards, newCard])
   }
 
-  render() {
-    return (
-      <div data-testid="forms">
-        <Form addCard={this.addCard} />
-        <Cards cardData={this.state.cards} />
-      </div>
-    )
-  }
+  return (
+    <div data-testid="forms">
+      <Form addCard={addCard} />
+      <Cards cardData={cards} />
+    </div>
+  )
 }
 
 export default Forms
