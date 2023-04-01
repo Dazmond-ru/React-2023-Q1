@@ -16,7 +16,7 @@ describe('Card Component', () => {
   }
 
   test('renders card correctly', () => {
-    render(<Card {...props} />, { wrapper: MemoryRouter })
+    render(<Card card={props} />, { wrapper: MemoryRouter })
 
     expect(screen.getByRole('img')).toHaveAttribute('src', props.image)
     expect(screen.getByRole('link')).toHaveTextContent(props.name)
@@ -25,28 +25,28 @@ describe('Card Component', () => {
   })
 
   test('renders card', () => {
-    render(<Card {...props} />, { wrapper: MemoryRouter })
+    render(<Card card={props} />, { wrapper: MemoryRouter })
 
     const card = screen.getByTestId('card')
     expect(card).toBeInTheDocument()
   })
 
   test('renders card-image', () => {
-    render(<Card {...props} />, { wrapper: MemoryRouter })
+    render(<Card card={props} />, { wrapper: MemoryRouter })
 
     const cardImage = screen.getByTestId('card-image')
     expect(cardImage).toBeInTheDocument()
   })
 
   test('renders card-body', () => {
-    render(<Card {...props} />, { wrapper: MemoryRouter })
+    render(<Card card={props} />, { wrapper: MemoryRouter })
 
     const cardBody = screen.getByTestId('card-body')
     expect(cardBody).toBeInTheDocument()
   })
 
   test('renders card-stats', () => {
-    render(<Card {...props} />, { wrapper: MemoryRouter })
+    render(<Card card={props} />, { wrapper: MemoryRouter })
 
     const cardStats = screen.getByTestId('card-stats')
     expect(cardStats).toBeInTheDocument()
