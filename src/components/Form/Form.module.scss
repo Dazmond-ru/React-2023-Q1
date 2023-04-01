@@ -1,0 +1,133 @@
+.card-builder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-bottom: 1rem;
+
+  &__wrapper {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background: #272b33;
+    border-radius: 0.5rem;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1rem;
+  }
+
+  &__label {
+    display: inline-block;
+    margin-bottom: 0.3rem;
+  }
+
+  &__input {
+    border: 0.15rem solid black;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+
+    &:focus {
+      border-color: #2f51c4;
+    }
+  }
+
+  &__status {
+    display: flex;
+    justify-content: space-around;
+    padding-right: 0.5rem;
+    align-items: center;
+  }
+
+  &__status-item {
+    cursor: pointer;
+
+    input,
+    label {
+      cursor: pointer;
+    }
+  }
+
+  &__image {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+
+    input {
+      cursor: pointer;
+      &::-webkit-file-upload-button {
+        background: #2f51c4;
+        color: white;
+        padding: 0.4rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+          background: #3a5ed2;
+        }
+      }
+    }
+  }
+
+  &__confirm {
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: -0.6rem;
+
+    & input {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__form-button {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: #fae202;
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      background: #ff9800;
+    }
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  &__errors {
+    color: #ff9800;
+    font-size: 1rem;
+  }
+
+  &__success {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: #1ab93a;
+    border: none;
+  }
+}
