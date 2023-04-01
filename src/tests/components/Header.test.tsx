@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event'
 
 describe('Header Component', () => {
   test('renders links of header', () => {
-    render(<Header location={location} />, { wrapper: MemoryRouter })
+    render(<Header />, { wrapper: MemoryRouter })
 
     const header = screen.getByRole('banner')
     expect(header).toBeInTheDocument()
@@ -18,7 +18,7 @@ describe('Header Component', () => {
     expect(aboutElement).toBeInTheDocument()
   })
   test('changes link class when clicked', async () => {
-    render(<Header location={location} />, { wrapper: MemoryRouter })
+    render(<Header />, { wrapper: MemoryRouter })
 
     const homeLink = screen.getByRole('link', { name: 'Home' })
     const aboutLink = screen.getByRole('link', { name: 'About Us' })

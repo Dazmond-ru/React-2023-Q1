@@ -1,13 +1,11 @@
 import React from 'react'
 import Header from './Header/Header'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
-  const location = useLocation()
-
   return (
     <>
-      <Header location={location} />
+      <Header />
       <main className="main">
         <div className="container">
           <Outlet />

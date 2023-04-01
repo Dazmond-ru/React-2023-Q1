@@ -2,13 +2,11 @@ import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import styles from './Header.module.scss'
 
-interface HeaderProps {
-  location: ReturnType<typeof useLocation>
-}
-
 const isClassActive = ({ isActive }: { isActive: boolean }) => (isActive ? 'active' : undefined)
 
-const Header = ({ location }: HeaderProps) => {
+const Header = () => {
+  const location = useLocation()
+
   const getPageTitle = () => {
     if (location.pathname === '/') return 'Home'
     else if (location.pathname === '/about-us' || location.pathname === '/about-us/') return 'About Us'
