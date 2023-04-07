@@ -4,6 +4,11 @@ export interface CardState {
   status?: string
   image?: string
   species?: string
+  gender?: string
+  location: {
+    name?: string
+  }
+  episode?: string[]
   created?: string
 }
 
