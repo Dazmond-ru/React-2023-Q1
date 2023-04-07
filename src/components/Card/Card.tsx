@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FiHeart, FiEye, FiClock } from 'react-icons/fi'
+import { FiClock } from 'react-icons/fi'
 import { CardState } from '../../interfaces/interfaces'
 import styles from './Card.module.scss'
 
@@ -9,6 +9,8 @@ interface CardProps {
 }
 
 const Card = ({ card }: CardProps) => {
+  const formatDateCreated = card.created?.split('T')[0].split('-').reverse().join('/')
+
   return (
     <div className={styles.card} data-testid="card">
       <div className={styles.card__image} data-testid="card-image">
@@ -21,17 +23,11 @@ const Card = ({ card }: CardProps) => {
         <p className={styles.card__status}>
           status: <span>{card.status}</span>
         </p>
-        <p className={styles.card__episodes}>species: {card.species}</p>
+        <p className={styles.card__species}>species: {card.species}</p>
       </div>
       <div className={styles.card__stats} data-testid="card-stats">
         <span>
-          <FiClock /> {card.created}
-        </span>
-        <span className={styles.card__likes}>
-          <FiHeart /> {card.likes}
-        </span>
-        <span>
-          <FiEye /> {card.views}
+          <FiClock /> {formatDateCreated}
         </span>
       </div>
     </div>

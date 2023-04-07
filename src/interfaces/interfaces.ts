@@ -5,8 +5,6 @@ export interface CardState {
   image?: string
   species?: string
   created?: string
-  views?: number
-  likes?: number
 }
 
 export type CardsType = { cardData?: CardState[] }

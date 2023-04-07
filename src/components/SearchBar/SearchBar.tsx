@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import styles from './SearchBar.module.scss'
 import { FiSearch } from 'react-icons/fi'
 
-const SearchBar = () => {
+interface OnSearchProps {
+  onSearch: (searchValue: string) => void
+}
+
+const SearchBar = ({ onSearch }: OnSearchProps) => {
   const setDefaultValue = () => {
     const searchValue = localStorage.getItem('searchValue')
     return searchValue ? searchValue : ''
@@ -18,6 +22,7 @@ const SearchBar = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    onSearch(value)
   }
 
   useEffect(() => {
