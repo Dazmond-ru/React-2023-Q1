@@ -11,25 +11,29 @@ const Home = () => {
   const [cardData, setCardData] = useState([])
   const [errorMessage, setErrorMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '')
 
   useEffect(() => {
-    fetchData().then((data) => setCardData(data))
-  }, [])
-
-  const handleSearch = (searchValue: string) => {
     setIsLoading(true)
     fetchData(searchValue)
       .then((data) => {
-        setCardData(data)
-        setErrorMessage('')
+        if (data) {
+          setCardData(data)
+          setErrorMessage('')
+        } else {
+          setCardData([])
+          setErrorMessage('❌ No matches found')
+        }
         setIsLoading(false)
       })
       .catch((error) => {
         console.error(error)
-        setCardData([])
-        setErrorMessage('❌ No matches found')
         setIsLoading(false)
       })
+  }, [searchValue])
+
+  const handleSearch = (searchValue: string) => {
+    setSearchValue(searchValue)
   }
 
   return (
