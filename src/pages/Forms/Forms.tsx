@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import Cards from '../../components/Cards/Cards'
+import ResultList from '../../components/ResultList/ResultList'
 import Form from '../../components/Form/Form'
 import { CardState } from '../../interfaces/interfaces'
 
@@ -19,7 +19,7 @@ const Forms = () => {
   return (
     <div data-testid="forms">
       <Form addCard={addCard} />
-      <Cards cardData={cards} />
+      <ResultList cardData={cards} errorMessage={''} />
     </div>
   )
 }

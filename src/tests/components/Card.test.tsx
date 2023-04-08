@@ -10,9 +10,12 @@ describe('Card Component', () => {
     status: 'Alive',
     image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
     species: 'Human',
+    gender: 'Male',
+    location: {
+      name: 'Citadel of Ricks',
+    },
+    episode: ['1 - 51'],
     created: '04/11/2017',
-    views: 7131,
-    likes: 348,
   }
 
   test('renders card correctly', () => {
