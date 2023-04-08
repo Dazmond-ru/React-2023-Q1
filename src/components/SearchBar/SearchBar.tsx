@@ -30,8 +30,9 @@ const SearchBar = ({ onSearch }: OnSearchProps) => {
         className={styles['search-bar__input']}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        data-testid="search-input"
       />
-      <button type="submit" className={styles['search-bar__button']}>
+      <button type="submit" className={styles['search-bar__button']} data-testid="search-button">
         <FiSearch />
       </button>
     </form>

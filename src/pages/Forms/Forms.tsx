@@ -19,7 +19,7 @@ const Forms = () => {
   return (
     <div data-testid="forms">
       <Form addCard={addCard} />
-      <ResultList cardData={cards} />
+      <ResultList cardData={cards} errorMessage={''} />
     </div>
   )
 }
