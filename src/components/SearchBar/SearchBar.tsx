@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import styles from './SearchBar.module.scss'
 import { FiSearch } from 'react-icons/fi'
 
@@ -16,24 +16,11 @@ const SearchBar = ({ onSearch }: OnSearchProps) => {
 
   const [value, setValue] = useState(valueRef.current)
 
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-  }
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSearch(value)
+    localStorage.setItem('searchValue', value)
   }
-
-  useEffect(() => {
-    valueRef.current = value
-  }, [value])
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchValue', valueRef.current)
-    }
-  }, [])
 
   return (
     <form className={styles['search-bar']} onSubmit={handleSubmit}>
@@ -42,7 +29,7 @@ const SearchBar = ({ onSearch }: OnSearchProps) => {
         placeholder="Search"
         className={styles['search-bar__input']}
         value={value}
-        onChange={inputHandler}
+        onChange={(e) => setValue(e.target.value)}
       />
       <button type="submit" className={styles['search-bar__button']}>
         <FiSearch />
