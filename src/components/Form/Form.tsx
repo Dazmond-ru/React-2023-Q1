@@ -45,8 +45,6 @@ const Form = ({ addCard }: FormProps) => {
       species,
       status,
       image: URL.createObjectURL(image[0]),
-      views: 0,
-      likes: 0,
     }
 
     if (addCard) {

@@ -5,7 +5,7 @@ export interface CardState {
   image?: string
   species?: string
   gender?: string
-  location: {
+  location?: {
     name?: string
   }
   episode?: string[]

@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { CardState } from '../../interfaces/interfaces'
 import styles from './PopupCard.module.scss'
-
-import preloader from '../../assets/preloader.gif'
 
 interface CardProps {
   card: CardState
@@ -29,7 +27,7 @@ const PopupCard = ({ card, onClose }: CardProps) => {
           <p className={styles['popup-card__status']}>status: {card.status}</p>
           <p className={styles['popup-card__species']}>species: {card.species}</p>
           <p className={styles['popup-card__gender']}>gender: {card.gender}</p>
-          <p className={styles['popup-card__location']}>location: {card.location.name}</p>
+          <p className={styles['popup-card__location']}>location: {card.location?.name}</p>
           <p className={styles['popup-card__episodes']}>episodes: {episodes}</p>
           <p className={styles['popup-card__created']}>created: {formatDateCreated}</p>
         </div>

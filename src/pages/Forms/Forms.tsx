@@ -10,8 +10,6 @@ const Forms = () => {
   const addCard = (card: CardState) => {
     const newCard = {
       ...card,
-      likes: 0,
-      views: 0,
     }
     setCards([...cards, newCard])
   }
