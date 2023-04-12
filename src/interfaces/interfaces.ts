@@ -1,3 +1,13 @@
+export interface ApiResponse {
+  info: {
+    count: number
+    pages: number
+    next: string | null
+    prev: string | null
+  }
+  results: CardState[]
+}
+
 export interface CardState {
   id?: number
   name?: string
@@ -11,8 +21,6 @@ export interface CardState {
   episode?: string[]
   created?: string
 }
-
-export type CardsType = { cardData?: CardState[] }
 
 export interface FormsState {
   cards: CardState[]

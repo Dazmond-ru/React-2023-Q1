@@ -1,17 +1,19 @@
 import React from 'react'
 import Card from '../Card/Card'
 import styles from './ResultList.module.scss'
-import { CardsType } from '../../interfaces/interfaces'
 
-interface CardsProps {
-  cardData?: CardsType['cardData']
-  errorMessage: string
+import { CardState } from 'interfaces/interfaces'
+
+type CardsProps = {
+  data: CardState[]
 }
 
-const ResultList = ({ cardData, errorMessage }: CardsProps) => {
+const ResultList = ({ data }: CardsProps) => {
   return (
     <div className={styles.cards} data-testid="cards">
-      {errorMessage ? errorMessage : cardData?.map((item) => <Card key={item.id} card={item} />)}
+      {data.map((item) => (
+        <Card key={item.id} card={item} />
+      ))}
     </div>
   )
 }

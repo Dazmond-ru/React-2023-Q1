@@ -17,7 +17,7 @@ const Forms = () => {
   return (
     <div data-testid="forms">
       <Form addCard={addCard} />
-      <ResultList cardData={cards} errorMessage={''} />
+      <ResultList />
     </div>
   )
 }

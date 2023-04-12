@@ -1,50 +1,31 @@
 import SearchBar from '../../components/SearchBar/SearchBar'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ResultList from '../../components/ResultList/ResultList'
-import { fetchData } from '../../api/api'
 
 import preloader from '../../assets/preloader.gif'
+
+import { useGetCharactersQuery } from '../../redux/api/api'
+import { useSelector } from 'react-redux'
+import { getSearchValue } from '../../redux/slices/search'
 
 import styles from './Home.module.scss'
 
 const Home = () => {
-  const [cardData, setCardData] = useState([])
-  const [errorMessage, setErrorMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '')
+  const search = useSelector(getSearchValue)
 
-  useEffect(() => {
-    setIsLoading(true)
-    fetchData(searchValue)
-      .then((data) => {
-        if (data) {
-          setCardData(data)
-          setErrorMessage('')
-        } else {
-          setCardData([])
-          setErrorMessage('❌ No matches found')
-        }
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error(error)
-        setIsLoading(false)
-      })
-  }, [searchValue])
-
-  const handleSearch = (searchValue: string) => {
-    setSearchValue(searchValue)
-  }
+  const { data = [], isError, isFetching } = useGetCharactersQuery(search)
 
   return (
     <div data-testid="home">
-      <SearchBar onSearch={handleSearch} />
-      {isLoading ? (
-        <div className={styles['home-preloader']}>
+      <SearchBar />
+      {isFetching ? (
+        <div className={styles['preloader']}>
           <img src={preloader} alt="preloader" />
         </div>
+      ) : isError ? (
+        <div>❌ No matches found</div>
       ) : (
-        <ResultList cardData={cardData} errorMessage={errorMessage} />
+        <ResultList data={data} />
       )}
     </div>
   )
