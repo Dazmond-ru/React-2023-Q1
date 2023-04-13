@@ -21,24 +21,3 @@ export interface CardState {
   episode?: string[]
   created?: string
 }
-
-export interface FormsState {
-  cards: CardState[]
-}
-
-export interface FormState {
-  errors: {
-    nameInput: string
-    createdInput: string
-    speciesInput: string
-    statusInput: string
-    imageInput: string
-    confirmInput: string
-  }
-  isButtonDisabled: boolean
-  isCardSaved: boolean
-}
-
-export type FormProps = {
-  addCard?: (cardData: CardState) => void
-}
