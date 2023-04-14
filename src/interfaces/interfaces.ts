@@ -11,13 +11,13 @@ export interface ApiResponse {
 export interface CardState {
   id: number
   name: string
-  status?: string
-  image?: string
-  species?: string
+  status: string
+  image: string
+  species: string
   gender?: string
   location?: {
     name?: string
   }
   episode?: string[]
-  created?: string
+  created: string
 }

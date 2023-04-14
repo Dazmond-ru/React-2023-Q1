@@ -43,13 +43,18 @@ export const Management = () => {
   }
 
   return (
-    <div className={styles.management}>
-      <select className={styles['management-sort']} onChange={handleSort} value={sort}>
+    <div className={styles.management} data-testid="management">
+      <select className={styles['management-sort']} onChange={handleSort} value={sort} data-testid="sort">
         <option value="id">id</option>
         <option value="alphabet">alphabet</option>
       </select>
       <div className={styles['management-pagination']}>
-        <button className={styles['management-pagination__button']} onClick={handlePrevButton} disabled={page === 1}>
+        <button
+          className={styles['management-pagination__button']}
+          onClick={handlePrevButton}
+          disabled={page === 1}
+          data-testid="prev"
+        >
           Prev
         </button>
         <form onSubmit={handlePageSubmit}>
@@ -65,6 +70,7 @@ export const Management = () => {
           className={styles['management-pagination__button']}
           onClick={handleNextButton}
           disabled={data.length < 20}
+          data-testid="next"
         >
           Next
         </button>

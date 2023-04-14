@@ -10,7 +10,7 @@ type CardsProps = {
 
 const ResultList = ({ data }: CardsProps) => {
   return (
-    <div className={styles.cards} data-testid="cards">
+    <div className={styles.cards} data-testid="resultList">
       {data.map((item) => (
         <Card key={item.id} card={item} />
       ))}

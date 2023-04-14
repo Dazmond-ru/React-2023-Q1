@@ -16,7 +16,7 @@ const PopupCard = ({ card, onClose }: CardProps) => {
   }
 
   return (
-    <div className={styles['popup-card__wrapper']} onClick={onClose}>
+    <div className={styles['popup-card__wrapper']} onClick={onClose} data-testid="popup">
       <div className={styles['popup-card']} onClick={handleCardClick}>
         <div className={styles['popup-card__cross']} onClick={onClose} data-testid="card-cross"></div>
         <div className={styles['popup-card__image']}>
