@@ -6,18 +6,21 @@ import preloader from '../../assets/preloader.gif'
 
 import { useGetCharactersQuery } from '../../redux/api/api'
 import { useSelector } from 'react-redux'
-import { getSearchValue } from '../../redux/slices/search'
+import { getPage, getSearchValue } from '../../redux/slices/search'
 
 import styles from './Home.module.scss'
+import { Management } from '../../components/Management/Management'
 
 const Home = () => {
   const search = useSelector(getSearchValue)
+  const page = useSelector(getPage)
 
-  const { data = [], isError, isFetching } = useGetCharactersQuery(search)
+  const { data = [], isError, isFetching } = useGetCharactersQuery({ search, page })
 
   return (
     <div data-testid="home">
       <SearchBar />
+      <Management />
       {isFetching ? (
         <div className={styles['preloader']}>
           <img src={preloader} alt="preloader" />
