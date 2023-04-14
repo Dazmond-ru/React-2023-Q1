@@ -6,7 +6,7 @@ import preloader from '../../assets/preloader.gif'
 
 import { useGetCharactersQuery } from '../../redux/api/api'
 import { useSelector } from 'react-redux'
-import { getPage, getSearchValue } from '../../redux/slices/search'
+import { getPage, getSearchValue, getSort } from '../../redux/slices/search'
 
 import styles from './Home.module.scss'
 import { Management } from '../../components/Management/Management'
@@ -14,8 +14,11 @@ import { Management } from '../../components/Management/Management'
 const Home = () => {
   const search = useSelector(getSearchValue)
   const page = useSelector(getPage)
+  const sort = useSelector(getSort)
 
   const { data = [], isError, isFetching } = useGetCharactersQuery({ search, page })
+
+  const sortData = sort === 'alphabet' ? data.slice().sort((a, b) => a.name.localeCompare(b.name)) : data
 
   return (
     <div data-testid="home">
@@ -28,7 +31,7 @@ const Home = () => {
       ) : isError ? (
         <div>❌ No matches found</div>
       ) : (
-        <ResultList data={data} />
+        <ResultList data={sortData} />
       )}
     </div>
   )

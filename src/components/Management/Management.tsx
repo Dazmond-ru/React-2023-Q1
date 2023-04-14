@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Management.module.scss'
 import { useSelector } from 'react-redux'
-import { getPage, getSearchValue, setPage } from '../../redux/slices/search'
+import { getPage, getSearchValue, getSort, setPage, setSort } from '../../redux/slices/search'
 import { useGetCharactersQuery } from '../../redux/api/api'
 import { useAppDispatch } from '../../redux/store'
 
@@ -9,6 +9,7 @@ export const Management = () => {
   const dispatch = useAppDispatch()
   const search = useSelector(getSearchValue)
   const page = useSelector(getPage)
+  const sort = useSelector(getSort)
 
   const { data = [] } = useGetCharactersQuery({ search, page })
 
@@ -37,9 +38,13 @@ export const Management = () => {
     else if (pageNumber < 1) input.value = '1'
   }
 
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setSort(e.currentTarget.value))
+  }
+
   return (
     <div className={styles.management}>
-      <select className={styles['management-sort']}>
+      <select className={styles['management-sort']} onChange={handleSort} value={sort}>
         <option value="id">id</option>
         <option value="alphabet">alphabet</option>
       </select>

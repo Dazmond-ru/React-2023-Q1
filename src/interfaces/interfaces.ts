@@ -9,8 +9,8 @@ export interface ApiResponse {
 }
 
 export interface CardState {
-  id?: number
-  name?: string
+  id: number
+  name: string
   status?: string
   image?: string
   species?: string
