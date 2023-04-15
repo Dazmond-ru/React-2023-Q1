@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import ResultList from '../../components/ResultList/ResultList'
 import Form from '../../components/Form/Form'
 import { CardState } from '../../interfaces/interfaces'
+import { useSelector } from 'react-redux'
+import { getData, setData } from '../../redux/slices/forms'
+import { useAppDispatch } from '../../redux/store'
 
 const Forms = () => {
-  const [cards, setCards] = useState<CardState[]>([])
+  const data = useSelector(getData)
+  const dispatch = useAppDispatch()
 
   const addCard = (card: CardState) => {
     const newCard = {
       ...card,
     }
-    setCards([...cards, newCard])
+    dispatch(setData([...data, newCard]))
   }
 
   return (
     <div data-testid="forms">
       <Form addCard={addCard} />
-      <ResultList cardData={cards} errorMessage={''} />
+      <ResultList data={data} />
     </div>
   )
 }

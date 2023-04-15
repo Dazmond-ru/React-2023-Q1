@@ -1,4 +1,4 @@
-import { FormProps } from 'interfaces/interfaces'
+import { CardState } from 'interfaces/interfaces'
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { species } from '../../data/data'
@@ -11,6 +11,10 @@ interface FormData {
   status: string
   image: FileList
   confirm: boolean
+}
+
+export type FormProps = {
+  addCard?: (cardData: CardState) => void
 }
 
 const Form = ({ addCard }: FormProps) => {
@@ -46,6 +50,8 @@ const Form = ({ addCard }: FormProps) => {
       status,
       image: URL.createObjectURL(image[0]),
     }
+
+    console.log(image[0])
 
     if (addCard) {
       addCard(newCard)

@@ -1,26 +1,23 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import styles from './SearchBar.module.scss'
 import { FiSearch } from 'react-icons/fi'
+import { useAppDispatch } from '../../redux/store'
+import { getSearchValue, setPage, setSearchValue } from '../../redux/slices/search'
+import { useSelector } from 'react-redux'
 
-interface OnSearchProps {
-  onSearch: (searchValue: string) => void
-}
+const SearchBar = () => {
+  const dispatch = useAppDispatch()
+  const saveSearch = useSelector(getSearchValue)
 
-const SearchBar = ({ onSearch }: OnSearchProps) => {
-  const setDefaultValue = () => {
-    const searchValue = localStorage.getItem('searchValue')
-    return searchValue ? searchValue : ''
-  }
-
-  const valueRef = useRef(setDefaultValue())
-
-  const [value, setValue] = useState(valueRef.current)
+  const [search, setSearch] = useState(saveSearch)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSearch(value)
-    localStorage.setItem('searchValue', value)
+    dispatch(setSearchValue(search))
+    dispatch(setPage(1))
   }
+
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => setSearch(e.currentTarget.value)
 
   return (
     <form className={styles['search-bar']} onSubmit={handleSubmit}>
@@ -28,8 +25,8 @@ const SearchBar = ({ onSearch }: OnSearchProps) => {
         type="search"
         placeholder="Search"
         className={styles['search-bar__input']}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleInputChange}
+        value={search}
         data-testid="search-input"
       />
       <button type="submit" className={styles['search-bar__button']} data-testid="search-button">
