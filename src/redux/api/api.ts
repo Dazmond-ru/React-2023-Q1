@@ -20,9 +20,19 @@ export const api = createApi({
       }),
       transformResponse: (response: ApiResponse) => response.results,
     }),
+    getPages: builder.query<number, GetCharactersArgs>({
+      query: (args) => ({
+        url: 'character',
+        params: {
+          name: args.search,
+          page: args.page,
+        },
+      }),
+      transformResponse: (response: ApiResponse) => response.info.pages,
+    }),
   }),
 })
 
-export const { useGetCharactersQuery } = api
+export const { useGetCharactersQuery, useGetPagesQuery } = api
 
 export const charactersReducer = api.reducer

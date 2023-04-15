@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Management.module.scss'
 import { useSelector } from 'react-redux'
 import { getPage, getSearchValue, getSort, setPage, setSort } from '../../redux/slices/search'
-import { useGetCharactersQuery } from '../../redux/api/api'
+import { useGetCharactersQuery, useGetPagesQuery } from '../../redux/api/api'
 import { useAppDispatch } from '../../redux/store'
 
 export const Management = () => {
@@ -11,7 +11,9 @@ export const Management = () => {
   const page = useSelector(getPage)
   const sort = useSelector(getSort)
 
-  const { data = [] } = useGetCharactersQuery({ search, page })
+  const { data: charactersData = [], isError } = useGetCharactersQuery({ search, page })
+
+  const { data: pagesData = 42 } = useGetPagesQuery({ search, page })
 
   const handleNextButton = () => {
     dispatch(setPage(page + 1))
@@ -34,7 +36,7 @@ export const Management = () => {
   const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const input = e.currentTarget
     const pageNumber = parseInt(input.value || '', 10)
-    if (pageNumber > 42) input.value = '42'
+    if (pageNumber > pagesData) input.value = pagesData.toString()
     else if (pageNumber < 1) input.value = '1'
   }
 
@@ -52,7 +54,7 @@ export const Management = () => {
         <button
           className={styles['management-pagination__button']}
           onClick={handlePrevButton}
-          disabled={page === 1}
+          disabled={page === 1 || isError}
           data-testid="prev"
         >
           Prev
@@ -62,14 +64,14 @@ export const Management = () => {
             className={styles['management-pagination__input']}
             type="number"
             name="pageNumber"
-            placeholder={`${page}/42`}
+            placeholder={!isError ? `${page}/${pagesData}` : '1/1'}
             onChange={handlePageChange}
           />
         </form>
         <button
           className={styles['management-pagination__button']}
           onClick={handleNextButton}
-          disabled={data.length < 20}
+          disabled={charactersData.length < 20 || isError}
           data-testid="next"
         >
           Next
