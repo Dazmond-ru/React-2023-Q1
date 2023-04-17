@@ -1,21 +1,15 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 
 import { Management } from '../../components/Management/Management'
-import { Provider } from 'react-redux'
 import store from '../../redux/store'
 import userEvent from '@testing-library/user-event'
+import withComponents from '../testUtilities'
 
-describe('ResultList Component', () => {
+describe('Management Component', () => {
+  const ManagementComponent = withComponents(Management, store)
   test('renders images alt', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Management />
-        </BrowserRouter>
-      </Provider>
-    )
+    render(<ManagementComponent />)
 
     const resultList = screen.getByTestId('management')
     expect(resultList).toBeInTheDocument()
