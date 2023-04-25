@@ -7,7 +7,7 @@ import store from './redux/store'
 import { hydrateRoot } from 'react-dom/client'
 
 hydrateRoot(
-  document.getElementById('root') as HTMLElement,
+  document.getElementById('app') as HTMLElement,
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>

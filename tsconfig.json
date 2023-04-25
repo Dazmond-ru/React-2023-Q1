@@ -14,5 +14,8 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "resolveJsonModule": true
-  }
+  },
+  // "include": ["vite.config.ts", ".eslintrc.cjs", "src"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "ts-node": { "esm": true, "experimentalSpecifierResolution": "node" }
 }

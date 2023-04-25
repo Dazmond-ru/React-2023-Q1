@@ -5,6 +5,7 @@ import AboutUs from './pages/AboutUs/AboutUs'
 import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound/NotFound'
 import Forms from './pages/Forms/Forms'
+import './main.scss'
 
 const App = () => {
   return (
