@@ -1,72 +1,52 @@
 import express from 'express'
-import fs from 'fs/promises'
+import { createServer } from 'vite'
+
+import fs from 'fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ViteDevServer } from 'vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const root = process.cwd()
+const indexHTMLPath = path.resolve(__dirname, '../../index.html')
 
-async function createServer() {
-  const resolve = (p: string) => path.resolve(__dirname, p)
-
+async function startServer() {
   const app = express()
-
-  const vite: ViteDevServer = await (
-    await import('vite')
-  ).createServer({
-    root,
-    server: {
-      middlewareMode: true,
-      watch: {
-        usePolling: true,
-        interval: 100,
-      },
-    },
-    appType: 'custom',
-  })
+  const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' })
 
   app.use(vite.middlewares)
 
   app.use('*', async (req, res) => {
     const url = req.originalUrl
+
     try {
-      let template: string
-      template = await fs.readFile(resolve('../../index.html'), 'utf8')
-      template = await vite.transformIndexHtml(url, template)
-      const render = await vite.ssrLoadModule('src/entry-server.tsx').then((m) => m.render)
-      const parts = template.split('<!--app-html-->')
+      const indexHTML = fs.readFileSync(indexHTMLPath, 'utf8')
+      const transformHTML = await vite.transformIndexHtml(url, indexHTML)
+      const [startHTML, endHTML] = transformHTML.split('<!--app-html-->')
+
+      const serverRenderer = (await vite.ssrLoadModule('./src/entry-server.tsx')).render
+
       try {
-        res.write(parts[0])
-        const stream = render(req, {
+        res.write(startHTML)
+        const stream = serverRenderer(url, {
           onShellReady() {
             stream.pipe(res)
           },
           onAllReady() {
-            res.write(parts[1])
+            res.write(endHTML)
             res.end()
           },
         })
-      } catch (err) {
-        if (err instanceof Response && err.status >= 300 && err.status <= 399) {
-          return res.redirect(err.status, err.headers.get('Location')!)
-        }
-        throw err
+      } catch (error) {
+        console.error(error)
       }
-    } catch (err) {
-      if (err instanceof Error) {
-        vite.ssrFixStacktrace(err)
-        console.log(err.stack)
-        res.status(500).end(err.stack)
-        return
-      }
-      console.log(err)
+    } catch (error) {
+      console.error(error)
     }
   })
+
   return app
 }
 
-createServer().then((app) => {
+startServer().then((app) => {
   app.listen(3000, () => {
     console.log('HTTP server is running at http://localhost:3000')
   })
