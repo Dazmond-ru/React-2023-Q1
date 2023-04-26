@@ -51,8 +51,6 @@ const Form = ({ addCard }: FormProps) => {
       image: URL.createObjectURL(image[0]),
     }
 
-    console.log(image[0])
-
     if (addCard) {
       addCard(newCard)
       e?.target.reset()

@@ -3,18 +3,12 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import Forms from '../../pages/Forms/Forms'
 import store from '../../redux/store'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
+import withComponents from '../testUtilities'
 
 describe('Forms Page', () => {
+  const FormsComponent = withComponents(Forms, store)
   test('renders Forms', () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Forms />
-        </BrowserRouter>
-      </Provider>
-    )
+    render(<FormsComponent />)
 
     const element = screen.getByTestId('forms')
     expect(element).toBeInTheDocument()
