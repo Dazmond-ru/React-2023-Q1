@@ -12,10 +12,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "resolveJsonModule": true
   },
-  // "include": ["vite.config.ts", ".eslintrc.cjs", "src"],
+  "include": ["vite.config.ts", "src"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "ts-node": { "esm": true, "experimentalSpecifierResolution": "node" }
 }
