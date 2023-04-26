@@ -42,7 +42,7 @@ const Card = ({ card }: CardProps) => {
           </span>
         </div>
       </div>
-      {showPopup && <PopupCard card={card} onClose={handleCrossClick} />}
+      {showPopup && <PopupCard cardId={card.id} onClose={handleCrossClick} />}
     </>
   )
 }

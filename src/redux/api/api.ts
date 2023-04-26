@@ -30,9 +30,14 @@ export const api = createApi({
       }),
       transformResponse: (response: ApiResponse) => response.info.pages,
     }),
+    getCharacterById: builder.query<CardState, { id: number }>({
+      query: (args) => ({
+        url: `character/${args.id}`,
+      }),
+    }),
   }),
 })
 
-export const { useGetCharactersQuery, useGetPagesQuery } = api
+export const { useGetCharactersQuery, useGetPagesQuery, useGetCharacterByIdQuery } = api
 
 export const charactersReducer = api.reducer

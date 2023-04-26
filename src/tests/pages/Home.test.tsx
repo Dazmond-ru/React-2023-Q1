@@ -5,19 +5,13 @@ import Home from '../../pages/Home/Home'
 
 import userEvent from '@testing-library/user-event'
 
-import { Provider } from 'react-redux'
 import store from '../../redux/store'
-import { BrowserRouter } from 'react-router-dom'
+import withComponents from '../testUtilities'
 
 describe('Home Page', () => {
+  const HomeComponent = withComponents(Home, store)
   test('Home functional', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Home />
-        </BrowserRouter>
-      </Provider>
-    )
+    render(<HomeComponent />)
 
     expect(screen.getByTestId('home')).toBeInTheDocument()
 
@@ -36,13 +30,7 @@ describe('Home Page', () => {
   })
 
   test('Home pagination', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Home />
-        </BrowserRouter>
-      </Provider>
-    )
+    render(<HomeComponent />)
 
     const input = screen.getByPlaceholderText('1/42')
     const prev = screen.getByTestId('prev')

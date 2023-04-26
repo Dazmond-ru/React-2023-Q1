@@ -1,15 +1,18 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import Card from '../../components/Card/Card'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { data as allData } from '../../data/data'
 import userEvent from '@testing-library/user-event'
-import { Provider } from 'react-redux'
-import store from '../../redux/store'
 
-const data = allData[0]
+import store from '../../redux/store'
+import withComponents from '../testUtilities'
+import { CardState } from 'interfaces/interfaces'
+
+const data: CardState = allData[0]
 
 describe('Card Component', () => {
+  const CardComponent = withComponents(Card, store)
   test('renders card correctly', () => {
     render(<Card card={data} />, { wrapper: MemoryRouter })
 
@@ -48,18 +51,14 @@ describe('Card Component', () => {
   })
 
   test('opens and closes PopupCard on card click and cross click', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Card card={data} />
-        </BrowserRouter>
-      </Provider>
-    )
+    render(<CardComponent card={data} />)
 
     expect(screen.queryByTestId('popup-card')).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByTestId('card'))
     waitFor(() => expect(screen.getByTestId('popup')).toBeInTheDocument())
+
+    expect(await screen.findByTestId('card-cross')).toBeInTheDocument()
 
     await userEvent.click(screen.getByTestId('card-cross'))
     expect(screen.queryByTestId('popup-card')).not.toBeInTheDocument()
