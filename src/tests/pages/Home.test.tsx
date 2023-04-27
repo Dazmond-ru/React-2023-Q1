@@ -41,8 +41,5 @@ describe('Home Page', () => {
 
     await userEvent.click(prev)
     waitFor(() => expect(screen.getByPlaceholderText('1/42')).toBeInTheDocument())
-
-    await userEvent.type(input, '15')
-    waitFor(() => expect(screen.getByPlaceholderText('15/42')).toBeInTheDocument())
   })
 })

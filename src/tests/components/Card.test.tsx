@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event'
 
 import store from '../../redux/store'
 import withComponents from '../testUtilities'
-import { CardState } from 'interfaces/interfaces'
+import { CardState } from '../../interfaces/interfaces'
 
 const data: CardState = allData[0]
 

@@ -37,9 +37,7 @@ const Card = ({ card }: CardProps) => {
           <p className={styles.card__species}>species: {card.species}</p>
         </div>
         <div className={styles.card__stats} data-testid="card-stats">
-          <span>
-            <FiClock /> {formatDateCreated}
-          </span>
+          <span>{formatDateCreated}</span>
         </div>
       </div>
       {showPopup && <PopupCard cardId={card.id} onClose={handleCrossClick} />}

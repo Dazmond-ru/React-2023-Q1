@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import styles from './SearchBar.module.scss'
-import { FiSearch } from 'react-icons/fi'
 import { useAppDispatch } from '../../redux/store'
 import { getSearchValue, setPage, setSearchValue } from '../../redux/slices/search'
 import { useSelector } from 'react-redux'
+
+import { ReactComponent as SearchIcon } from '../../assets/search.svg'
 
 const SearchBar = () => {
   const dispatch = useAppDispatch()
@@ -30,7 +31,7 @@ const SearchBar = () => {
         data-testid="search-input"
       />
       <button type="submit" className={styles['search-bar__button']} data-testid="search-button">
-        <FiSearch />
+        <SearchIcon />
       </button>
     </form>
   )
