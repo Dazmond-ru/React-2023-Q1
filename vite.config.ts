@@ -38,6 +38,8 @@ export default defineConfig({
         '**/main.tsx',
         '**/entry*.tsx',
         '**/*.cjs',
+        '**/server.ts',
+        '**/cypress/**',
       ],
     },
   },
