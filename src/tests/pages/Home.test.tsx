@@ -32,7 +32,6 @@ describe('Home Page', () => {
   test('Home pagination', async () => {
     render(<HomeComponent />)
 
-    const input = screen.getByPlaceholderText('1/42')
     const prev = screen.getByTestId('prev')
     const next = screen.getByTestId('next')
 

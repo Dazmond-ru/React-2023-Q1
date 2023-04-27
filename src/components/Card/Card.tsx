@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FiClock } from 'react-icons/fi'
 import { CardState } from '../../interfaces/interfaces'
 import styles from './Card.module.scss'
 import PopupCard from '../../components/PopupCard/PopupCard'

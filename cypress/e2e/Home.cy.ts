@@ -25,7 +25,8 @@ describe('Home Page', () => {
     cy.get('[placeholder="2/42"]').should('be.visible')
     cy.get('[data-testid="prev"]').click()
     cy.get('[placeholder="1/42"]').should('be.visible')
-    cy.get('[placeholder="1/42"]').type('15').type('{enter}')
+    cy.get('[placeholder="1/42"]').type('15')
+    cy.get('[placeholder="1/42"]').type('{enter}')
     cy.get('[placeholder="15/42"]').should('be.visible')
   })
 
@@ -35,6 +36,7 @@ describe('Home Page', () => {
   })
 
   it('should update the input value on change', () => {
-    cy.get('[placeholder="Search"]').type('hello').should('have.value', 'hello')
+    cy.get('[placeholder="Search"]').type('hello')
+    cy.get('[placeholder="Search"]').should('have.value', 'hello')
   })
 })
